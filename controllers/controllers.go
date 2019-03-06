@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"../models"
 	"../store"
 	"../utils"
 	"github.com/gin-gonic/gin"
@@ -8,7 +9,7 @@ import (
 
 type Card struct{}
 
-var utilCard = new(utils.UtilCard)
+var board = models.Board{}
 var utilUrl = new(utils.UtilUrl)
 
 func (card Card) AllCardReview(c *gin.Context) {
@@ -18,11 +19,11 @@ func (card Card) AllCardReview(c *gin.Context) {
 	}
 	listNames, time := utilUrl.HandelResQuery(c)
 
-	filterTime := utilCard.FilterCardWithTime(cards, time)
+	filterTime := board.FilterCardWithTime(cards, time)
 	if listNames == nil {
 		c.JSON(200, filterTime)
 	}
-	result := utilCard.ParerCardsWithNameList(filterTime, listNames)
+	result := board.ParerCardsWithNameList(filterTime, listNames)
 	c.JSON(200, result)
 }
 
@@ -32,8 +33,8 @@ func (card Card) AllCardChangeDueDate(c *gin.Context) {
 		c.JSON(200, gin.H{"Err": "Not Found"})
 	}
 	_, time := utilUrl.HandelResQuery(c)
-	filterTime := utilCard.FilterCardWithTime(cards, time)
+	filterTime := board.FilterCardWithTime(cards, time)
 
-	result := utilCard.FilterChangeDue(filterTime)
+	result := board.FilterChangeDue(filterTime)
 	c.JSON(200, result)
 }

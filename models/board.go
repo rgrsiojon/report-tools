@@ -1,42 +1,40 @@
-package utils
+package models
 
 import (
 	"strings"
 	"time"
 
-	"../models"
+	"../utils"
 )
 
-type UtilCard struct{}
+var utilTime = new(utils.UtilTime)
 
-var utilTime = new(UtilTime)
-
-func (UtilCard) ParerCardsWithNameList(cards []models.MyCard, result []string) []interface{} {
+func (Board) ParerCardsWithNameList(cards []Card, result []string) []interface{} {
 	var data []interface{}
 	for _, v := range result {
-		data = append(data, filter(cards, func(item models.MyCard) bool {
+		data = append(data, filter(cards, func(item Card) bool {
 			return strings.ToLower(v) == strings.ToLower(item.ListName)
 		}))
 	}
 	return data
 }
 
-func (UtilCard) FilterCardWithTime(mc []models.MyCard, count int) []models.MyCard {
+func (Board) FilterCardWithTime(mc []Card, count int) []Card {
 	now := time.Now()
-	return filter(mc, func(i models.MyCard) bool {
+	return filter(mc, func(i Card) bool {
 		return func() int {
 			return int(i.DateLastActivity.Sub(now).Hours() / 24)
 		}()+count > 0
 	})
 }
 
-func (UtilCard) FilterChangeDue(mc []models.MyCard) []models.MyCard {
-	return filter(mc, func(i models.MyCard) bool {
+func (Board) FilterChangeDue(mc []Card) []Card {
+	return filter(mc, func(i Card) bool {
 		return i.ChangeDueDate
 	})
 }
 
-func (UtilCard) CompareTwoCards(cardOnDb models.MyCard, cardOnTrello models.MyCard) models.MyCard {
+func (Board) CompareTwoCards(cardOnDb Card, cardOnTrello Card) Card {
 	if utilTime.CompareTwoTime(cardOnDb.DateLastActivity, cardOnTrello.DateLastActivity) == false {
 		cardOnDb.DateLastActivity = cardOnTrello.DateLastActivity
 	}
@@ -49,7 +47,7 @@ func (UtilCard) CompareTwoCards(cardOnDb models.MyCard, cardOnTrello models.MyCa
 }
 
 //@ Filter []modules.MyCard
-func filter(vs []models.MyCard, f func(models.MyCard) bool) (vsf []models.MyCard) {
+func filter(vs []Card, f func(Card) bool) (vsf []Card) {
 	for _, v := range vs {
 		if f(v) {
 			vsf = append(vsf, v)

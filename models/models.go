@@ -5,7 +5,7 @@ import (
 )
 
 type (
-	MyCard struct {
+	Card struct {
 		ID                   string
 		Name                 string
 		ListName             string
@@ -16,5 +16,12 @@ type (
 		Due                  *time.Time
 		ChangeDueDate        bool
 		HistoryChangeDueDate []*time.Time
+	}
+	Board struct {
+		Id string
+	}
+	TrelloAPI struct {
+		Key   string
+		Token string
 	}
 )

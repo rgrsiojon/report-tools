@@ -4,12 +4,10 @@ import (
 	"github.com/adlio/trello"
 )
 
-type TrelloAPI struct{}
-
 //@ Get all cardon board from trello api
-func (TrelloAPI) GetCardsOnTrelloAPI(key, token, id string) ([]*trello.Card, error) {
-	client := trello.NewClient(key, token)
-	board, err := client.GetBoard(id, trello.Defaults())
+func (trll TrelloAPI) GetCardsOnTrelloAPI(ID string) ([]*trello.Card, error) {
+	client := trello.NewClient(trll.Key, trll.Token)
+	board, err := client.GetBoard(ID, trello.Defaults())
 	if err != nil {
 		return nil, err
 	}
@@ -21,8 +19,8 @@ func (TrelloAPI) GetCardsOnTrelloAPI(key, token, id string) ([]*trello.Card, err
 }
 
 //@ Get data list with id list, key app and token
-func (TrelloAPI) GetListbByIdOnTrelloAPI(appKey string, token string, ID string) (*trello.List, error) {
-	client := trello.NewClient(appKey, token)
+func (trll TrelloAPI) GetListbByIdOnTrelloAPI(ID string) (*trello.List, error) {
+	client := trello.NewClient(trll.Key, trll.Token)
 	list, err := client.GetList(ID, trello.Defaults())
 	if err != nil {
 		return nil, err

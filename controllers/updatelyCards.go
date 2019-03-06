@@ -13,7 +13,6 @@ import (
 )
 
 var wg sync.WaitGroup
-var TrelloAPI = new(models.TrelloAPI)
 var UtilString = new(utils.UtilString)
 var UtilTime = new(utils.UtilTime)
 
@@ -31,8 +30,12 @@ func (RoutineCard) UpdateDataOnDB() {
 
 // @ Write data on chanel card
 func WriteData(chanCard chan []*trello.Card, key, token, id string) {
+	var TrelloAPI = models.TrelloAPI{
+		Key:   key,
+		Token: token,
+	}
 	for {
-		cards, err := TrelloAPI.GetCardsOnTrelloAPI(key, token, id)
+		cards, err := TrelloAPI.GetCardsOnTrelloAPI(id)
 		if err != nil {
 			chanCard <- nil
 		} else {
@@ -43,36 +46,40 @@ func WriteData(chanCard chan []*trello.Card, key, token, id string) {
 
 //@ Handel data on chanel card
 func HandelData(chanCard chan []*trello.Card, key, token string) {
+	var TrelloAPI = models.TrelloAPI{
+		Key:   key,
+		Token: token,
+	}
 	for {
 		cards := <-chanCard
 		if cards != nil {
 			for _, value := range cards {
-				myCard := models.MyCard{
+				card := models.Card{
 					ID:               value.ID,
 					Name:             value.Name,
 					IdList:           value.IDList,
 					DateLastActivity: value.DateLastActivity,
 					Due:              value.Due,
 				}
-				list, err := TrelloAPI.GetListbByIdOnTrelloAPI(key, token, value.IDList)
+				list, err := TrelloAPI.GetListbByIdOnTrelloAPI(value.IDList)
 				if err != nil {
 
 				}
-				myCard.ListName = list.Name
-				myCard.TimeRealForDone = UtilString.GetRealTimeOfDone(value.Name)
-				myCard.TimeGuessForDone = UtilString.GetTimeGuessForDone(value.Name)
-				myCard.HistoryChangeDueDate = UtilTime.AppendTime(myCard.HistoryChangeDueDate, value.Due)
+				card.ListName = list.Name
+				card.TimeRealForDone = UtilString.GetRealTimeOfDone(value.Name)
+				card.TimeGuessForDone = UtilString.GetTimeGuessForDone(value.Name)
+				card.HistoryChangeDueDate = UtilTime.AppendTime(card.HistoryChangeDueDate, value.Due)
 
-				result, err := store.FindOne(myCard.ID)
+				result, err := store.FindOne(card.ID)
 				if err != nil {
-					store.InsertData(myCard, func(err error) {
+					store.InsertData(card, func(err error) {
 						if err != nil {
 							fmt.Println("Can't insert")
 						}
 						fmt.Println("Inserted !")
 					})
 				} else {
-					newCard := utilCard.CompareTwoCards(result, myCard)
+					newCard := board.CompareTwoCards(result, card)
 					err := store.UpdateCard(newCard.ID, newCard)
 					if err != nil {
 						fmt.Println("Can't Update")

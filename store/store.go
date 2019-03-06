@@ -22,8 +22,8 @@ func InsertData(data interface{}, fn func(error)) {
 	fn(nil)
 }
 
-func FindOne(id string) (models.MyCard, error) {
-	var card models.MyCard
+func FindOne(id string) (models.Card, error) {
+	var card models.Card
 	err := collection.Find(bson.M{"id": id}).One(&card)
 	if err != nil {
 		return card, err
@@ -31,8 +31,8 @@ func FindOne(id string) (models.MyCard, error) {
 	return card, nil
 }
 
-func GetAllCard() ([]models.MyCard, error) {
-	var cards []models.MyCard
+func GetAllCard() ([]models.Card, error) {
+	var cards []models.Card
 	err := collection.Find(bson.M{}).All(&cards)
 	if err != nil {
 		return nil, err
