@@ -7,6 +7,7 @@ import (
 )
 
 var Routers *gin.Engine
+
 var RoutineCard = new(controllers.RoutineCard)
 
 func init() {

@@ -1,17 +1,15 @@
 package utils
 
 import (
+	"net/url"
 	"strconv"
 	"strings"
-
-	"github.com/gin-gonic/gin"
 )
 
 type UtilUrl struct{}
 
-func (UtilUrl) HandelResQuery(c *gin.Context) ([]string, int) {
+func (UtilUrl) HandelResQuery(q url.Values) ([]string, int) {
 	var count int
-	q := c.Request.URL.Query()
 	if q["time"] == nil {
 		return nil, 7
 	}
