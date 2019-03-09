@@ -2,7 +2,6 @@ package routers
 
 import (
 	"../controllers"
-	"../urls"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,9 +14,8 @@ func init() {
 }
 
 func SetupRouters() {
-	url_pattern := urls.ReturnURLS()
 	go RoutineCard.UpdateDataOnDB()
 	card := new(controllers.Card)
-	Routers.GET(url_pattern.CARD_REVIEW_PATH, card.AllCardReview)
-	Routers.GET(url_pattern.CARD_CHANGE_DUE_PATH, card.AllCardChangeDueDate)
+	Routers.GET("/b/cards/review", card.AllCardReview)
+	Routers.GET("/b/cards/change-due", card.AllCardChangeDueDate)
 }
