@@ -1,9 +1,10 @@
 package main
 
 import (
-	"./config"
-	"./routers"
+	"github.com/rgrsiojon/report-tools/config"
+
 	"github.com/gin-gonic/gin"
+	"github.com/rgrsiojon/report-tools/routers"
 )
 
 func main() {

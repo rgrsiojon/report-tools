@@ -1,7 +1,7 @@
 package store
 
 import (
-	"../models"
+	"github.com/rgrsiojon/report-tools/models"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )

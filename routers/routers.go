@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"../controllers"
 	"github.com/gin-gonic/gin"
+	"github.com/rgrsiojon/report-tools/controllers"
 )
 
 var Routers *gin.Engine

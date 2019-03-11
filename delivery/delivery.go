@@ -6,10 +6,10 @@ import (
 
 	"time"
 
-	"../config"
-	"../models"
-	"../utils"
 	"github.com/adlio/trello"
+	"github.com/rgrsiojon/report-tools/config"
+	"github.com/rgrsiojon/report-tools/models"
+	"github.com/rgrsiojon/report-tools/utils"
 )
 
 type Board struct{}

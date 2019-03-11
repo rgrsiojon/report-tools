@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"../service"
-	"../utils"
 	"github.com/gin-gonic/gin"
+	"github.com/rgrsiojon/report-tools/service"
+	"github.com/rgrsiojon/report-tools/utils"
 )
 
 type Card struct{}

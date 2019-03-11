@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"sync"
 
-	"../config"
-	"../models"
+	"github.com/rgrsiojon/report-tools/config"
+	"github.com/rgrsiojon/report-tools/models"
 
-	"../delivery"
-	"../store"
-	"../utils"
 	"github.com/adlio/trello"
+	"github.com/rgrsiojon/report-tools/delivery"
+	"github.com/rgrsiojon/report-tools/store"
+	"github.com/rgrsiojon/report-tools/utils"
 )
 
 var wg sync.WaitGroup

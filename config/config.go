@@ -25,6 +25,6 @@ type Config struct {
 }
 
 func ReadConfig() (cg Config) {
-	configor.Load(&cg, "config.yml")
+	configor.Load(&cg, "containers.yaml")
 	return
 }

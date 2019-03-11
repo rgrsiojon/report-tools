@@ -1,7 +1,7 @@
 package models
 
 import (
-	"../utils"
+	"github.com/rgrsiojon/report-tools/utils"
 )
 
 var utilTime = new(utils.UtilTime)

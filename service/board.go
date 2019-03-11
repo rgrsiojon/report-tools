@@ -3,8 +3,8 @@ package service
 import (
 	"net/url"
 
-	"../delivery"
-	"../store"
+	"github.com/rgrsiojon/report-tools/delivery"
+	"github.com/rgrsiojon/report-tools/store"
 )
 
 type Board struct{}

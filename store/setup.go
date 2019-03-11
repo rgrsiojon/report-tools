@@ -1,7 +1,7 @@
 package store
 
 import (
-	"../config"
+	"github.com/rgrsiojon/report-tools/config"
 	"gopkg.in/mgo.v2"
 )
 
