@@ -1,19 +1,18 @@
 package store
 
 import (
-	"github.com/rgrsiojon/report-tools/config"
 	"gopkg.in/mgo.v2"
 )
 
-var Config = config.ReadConfig()
+var DatabaseName = "mongodb"
 
 type DB struct {
 	*mgo.Session
 }
 
 func NewDatabase() (*DB, error) {
-	if Config.Database.Name == "mongodb" {
-		db, err := mongoDB(Config.Database.Username, Config.Database.Password)
+	if DatabaseName == "mongodb" {
+		db, err := mongoDB("roger", "roger123")
 		if err != nil {
 			return &DB{nil}, nil
 		}

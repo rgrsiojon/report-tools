@@ -7,20 +7,21 @@ import (
 	"time"
 
 	"github.com/adlio/trello"
-	"github.com/rgrsiojon/report-tools/config"
 	"github.com/rgrsiojon/report-tools/models"
 	"github.com/rgrsiojon/report-tools/utils"
 )
 
+var keyapp = "91fc328d734261ff45775ebe00fdb13c"
+var token = "0859930bb7d2177e2fd3a1a8c4bed14f253ba2f93b044e4b5e9e59241b9f61d3"
+
 type Board struct{}
 
-var Config = config.ReadConfig()
 var utilUrl = new(utils.UtilUrl)
 var UtilString = new(utils.UtilString)
 var UtilTime = new(utils.UtilTime)
 var TrelloAPI = models.TrelloAPI{
-	Config.App.Keyapp,
-	Config.App.Token,
+	keyapp,
+	token,
 }
 
 func (Board) FilterCardsOnReview(cards []models.Card, q url.Values) (result [][]models.Card) {

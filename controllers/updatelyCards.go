@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/rgrsiojon/report-tools/config"
 	"github.com/rgrsiojon/report-tools/models"
 
 	"github.com/adlio/trello"
@@ -12,6 +11,10 @@ import (
 	"github.com/rgrsiojon/report-tools/store"
 	"github.com/rgrsiojon/report-tools/utils"
 )
+
+var keyapp = "91fc328d734261ff45775ebe00fdb13c"
+var token = "0859930bb7d2177e2fd3a1a8c4bed14f253ba2f93b044e4b5e9e59241b9f61d3"
+var idboard = "iCBtQXmr"
 
 var wg sync.WaitGroup
 var UtilTime = new(utils.UtilTime)
@@ -22,11 +25,10 @@ type RoutineCard struct{}
 
 //@ Call two go routine
 func (RoutineCard) UpdateDataOnDB() {
-	Config := config.ReadConfig()
 	wg.Add(1)
 	chanCard := make(chan []*trello.Card, 3)
-	go WriteData(chanCard, Config.App.Keyapp, Config.App.Token, Config.App.Idboard)
-	go HandelData(chanCard, Config.App.Keyapp, Config.App.Token)
+	go WriteData(chanCard, keyapp, token, idboard)
+	go HandelData(chanCard, keyapp, token)
 	wg.Wait()
 }
 
@@ -57,17 +59,19 @@ func HandelData(chanCard chan []*trello.Card, key, token string) {
 				if err != nil {
 					store.InsertData(value, func(err error) {
 						if err != nil {
-							fmt.Println("Can't insert")
+							// fmt.Println("Can't insert")
 						}
-						fmt.Println("Inserted !")
+						// fmt.Println("Inserted !")
 					})
 				} else {
 					newCard := board.CompareTwoCards(cardOnDB, value)
 					err := store.UpdateCard(newCard.ID, newCard)
 					if err != nil {
-						fmt.Println("Can't Update")
+						// handel
+						// fmt.Println("Can't Update")
 					} else {
-						fmt.Println("Updated !")
+						// handel
+						// fmt.Println("Updated !")
 					}
 				}
 			}

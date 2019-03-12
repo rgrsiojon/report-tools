@@ -6,20 +6,3 @@ containers:
   - name: http
     hostPort: 80
     containerPort: 8080
-app: 
-  keyapp: 91fc328d734261ff45775ebe00fdb13c
-  token:  0859930bb7d2177e2fd3a1a8c4bed14f253ba2f93b044e4b5e9e59241b9f61d3
-  idboard: iCBtQXmr
-  username: eban6
-
-server:
-  host: localhost
-  port: 8080
-
-database:
-    name:     mongodb
-    username:     roger
-    password: roger123
-
-contacts:
-  email: ybuoceban.umbala@gmail.com
