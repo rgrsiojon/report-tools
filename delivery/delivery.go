@@ -26,13 +26,17 @@ var TrelloAPI = models.TrelloAPI{
 
 func (Board) FilterCardsOnReview(cards []models.Card, q url.Values) (result [][]models.Card) {
 	listNames, count := utilUrl.HandelResQuery(q)
-
 	now := time.Now()
 	filterTime := filter(cards, func(i models.Card) bool {
 		return func() int {
 			return int(i.DateLastActivity.Sub(now).Hours() / 24)
 		}()+count > 0
 	})
+
+	if len(listNames) == 0 {
+		result = append(result, cards)
+		return
+	}
 
 	for _, v := range listNames {
 		result = append(result, filter(filterTime, func(item models.Card) bool {
